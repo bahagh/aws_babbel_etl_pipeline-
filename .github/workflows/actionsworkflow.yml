@@ -21,7 +21,7 @@ jobs:
             rm Bubble_Transformer_Function.zip
           fi
           zip Bubble_Transformer_Function.zip Bubble_Transformer_Function.py
-        working-directory: ${{ github.workspace }}
+        working-directory: ${{ github.workspace }}/lambda
 
 
       - name: Install dependencies
@@ -31,7 +31,7 @@ jobs:
         working-directory: ${{ github.workspace }}
 
 
-        
+
 #      - name: Lambda function Quality Test
 #        run: pytest lambda_quality.py
         
