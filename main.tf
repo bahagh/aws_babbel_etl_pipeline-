@@ -10,8 +10,8 @@ terraform {
 # Configuring the AWS Provider
 provider "aws" {
   region = "eu-west-1"
-  access_key = "AKIAWDUCMLDJF3ZF7BEK"
-  secret_key = "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"
+  access_key = "access"
+  secret_key = "secret"
 }
 
 resource "aws_kinesis_stream" "kinesis_stream" {
@@ -35,6 +35,12 @@ resource "aws_lambda_event_source_mapping" "event_source_mapping" {
   function_name     = aws_lambda_function.lambda_function.arn
   starting_position = "TRIM_HORIZON"
   batch_size        = 278
+
+  lifecycle {
+    ignore_changes = [
+      event_source_arn, 
+    ]
+  }
 }
 resource "aws_dynamodb_table" "ProcessedEvents" {
   name           = "ProcessedEvents"
