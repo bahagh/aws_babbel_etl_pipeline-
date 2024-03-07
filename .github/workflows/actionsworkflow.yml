@@ -13,6 +13,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        
 
       - name: Zip Python file
         run: |
@@ -21,6 +22,14 @@ jobs:
           fi
           zip Bubble_Transformer_Function.zip Bubble_Transformer_Function.py
         working-directory: ${{ github.workspace }}
+
+
+      - name: Lambda function Quality Test
+        run: pytest lambda_quality.py
+        working-directory: ${{ github.workspace }}
+
+
+
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1

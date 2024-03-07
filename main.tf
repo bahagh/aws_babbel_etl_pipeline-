@@ -14,11 +14,18 @@ provider "aws" {
   secret_key = "tRaGYrbaJVn5of9faSXL5naVWWRz7O5bCUna+AtC"
 }
 
+
+
+#terraform resource for my kinesis data stream
 resource "aws_kinesis_stream" "kinesis_stream" {
   name        = "Baha_Kinesis_Babbel_Stream"
   shard_count = 1
 }
 
+
+
+
+#terraform resource for my lambda fuction 
 resource "aws_lambda_function" "lambda_function" {
   filename      = "./Bubble_Transformer_Function.zip"
   function_name = "Bubble_Transformer_Function"
@@ -29,7 +36,11 @@ resource "aws_lambda_function" "lambda_function" {
 
   runtime = "python3.8"
 }
-////
+
+
+
+# terraform resource for the kinesis and lambda function event mapping (i needed to check whether the event mapping is already existing or not because for some reason not as terraform should it would always try to create it even thought it was just created in the last terraform apply)
+# made the batch size to 278/second so it can process around 1000000/hour 
 variable "create_lambda_mapping" {
   default = false
 }
@@ -47,7 +58,7 @@ resource "aws_lambda_event_source_mapping" "event_source_mapping" {
 }
 
 
-////
+# terraform resource for my dynamodb (i'm using a dynamodb table as a way to handle duplicate events like a cache in such way each uuid passed by the lambda function will be stored in the dynamodb table and as long as the uuid of the event is not existing in the dynamodb it will be processed other wise if it does exist the event wont be tranformed and it will be skipped to save compute time and store and to keep the data in s3 relevant and organized )
 resource "aws_dynamodb_table" "ProcessedEvents" {
   name           = "ProcessedEvents"
   billing_mode   = "PAY_PER_REQUEST"
@@ -65,6 +76,10 @@ resource "aws_dynamodb_table" "ProcessedEvents" {
   }
 }
 
+
+
+
+# terraform resource for my s3 bucket 
 resource "aws_s3_bucket" "s3_bucket" {
   bucket = "baha-s3-babbel-bucket"
   tags = {
@@ -73,6 +88,10 @@ resource "aws_s3_bucket" "s3_bucket" {
   }
 }
 
+
+
+
+# terraform resource to bock public access for my s3 bucket
 resource "aws_s3_bucket_public_access_block" "access_block" {
   bucket = aws_s3_bucket.s3_bucket.id
 
@@ -82,6 +101,9 @@ resource "aws_s3_bucket_public_access_block" "access_block" {
   restrict_public_buckets = true
 }
 
+
+
+# terraform resource to create the iam role i'll be using to make the connections i need between the different services possible
 resource "aws_iam_role" "Baha_Lambda_Babbel_Role" {
   name = "Baha_Lambda_Babbel_Role"
 
@@ -103,6 +125,10 @@ EOF
 }
 
 
+
+
+
+# Customized policy containing the right i need from the dynamo table (its possible just use the predefined full access to dynamodb policy but it"s better to follow the principle of the least number of privilege and to use the specific requirements i'd need)
 resource "aws_iam_policy" "dynamodb_access" {
   name        = "DynamoDBAccessPolicy"
   description = "Customized Policy to allow Lambda function to use DynamoDB like a cache"
@@ -128,12 +154,17 @@ resource "aws_iam_policy" "dynamodb_access" {
 EOF
 }
 
+
+
+# granting the dynamodb policy to the iam role i created earlier 
 resource "aws_iam_role_policy_attachment" "lambda_dynamodb_access" {
   role       = "Baha_Lambda_Babbel_Role"
   policy_arn = aws_iam_policy.dynamodb_access.arn
 }
 
 
+
+# customized access policy for s3
 resource "aws_iam_policy" "s3_access" {
   name        = "S3AccessPolicy"
   description = "Customized Policy for s3 interactions"
@@ -162,23 +193,37 @@ resource "aws_iam_policy" "s3_access" {
 EOF
 }
 
+
+
+
+#granting the customized policy i created for interacting with s3 to my iam role i created earlier
 resource "aws_iam_role_policy_attachment" "lambda_s3_access" {
   role       = "Baha_Lambda_Babbel_Role"
   policy_arn = aws_iam_policy.s3_access.arn
 }
 
 
+
+
+
+# attaching policy to read data from kinesis 
 resource "aws_iam_role_policy_attachment" "kinesis_read_only_access" {
   role       = aws_iam_role.Baha_Lambda_Babbel_Role.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonKinesisReadOnlyAccess"
 }
 
 
+
+
+# granting lambda basic execution role to my iam role i created before 
 resource "aws_iam_role_policy_attachment" "lambda_basic_execution_role" {
   role       = aws_iam_role.Baha_Lambda_Babbel_Role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
 
+
+
+# granting kinesis execution role to my iam role i created before 
 resource "aws_iam_role_policy_attachment" "lambda_kinesis_execution_role" {
   role       = aws_iam_role.Baha_Lambda_Babbel_Role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaKinesisExecutionRole"
