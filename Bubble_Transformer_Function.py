@@ -62,7 +62,7 @@ def lambda_handler(event, context):
         logger.info('Events processed and saved to S3 successfully!')
         return {
             'statusCode': 200,
-            'body': json.dumps('Events processed and saved to S3 successfully!')
+            'body': json.dumps('Events processed successfully!')
         }
     except Exception as e:
         logger.error(f'Error processing event: {e}')
