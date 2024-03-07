@@ -3,7 +3,7 @@ import json
 import base64
 from datetime import datetime
 import logging
-# considering these some serioous modifications and testing whether they will be deployed or not
+
 
 # Initializing logging
 logger = logging.getLogger()
@@ -15,7 +15,7 @@ table = dynamodb.Table('ProcessedEvents')
 
 S3_BUCKET_NAME = 'baha-s3-babbel-bucket'
 S3_KEY_PREFIX = 'babbelevents/'
-
+msg=True
 def lambda_handler(event, context):
     try:
         for record in event['Records']:
@@ -28,6 +28,7 @@ def lambda_handler(event, context):
             response = table.get_item(Key={'event_uuid': event_uuid})
             if 'Item' in response:
                 logger.info(f'Event {event_uuid} has already been processed, skipping.')
+                msg=False
                 continue
 
             # Extracting fields from the payload
@@ -58,12 +59,18 @@ def lambda_handler(event, context):
 
             # Adding event to DynamoDB
             table.put_item(Item={'event_uuid': event_uuid})
-
-        logger.info('Events processed and saved to S3 successfully!')
-        return {
-            'statusCode': 200,
-            'body': json.dumps('Events processed and saved to S3 successfully!')
-        }
+        if msg == True :            
+            logger.info('Events processed and saved to S3 successfully!')
+            return {
+                'statusCode': 200,
+                'body': json.dumps('Events processed and saved to S3 successfully!')
+            }
+        else :
+            logger.info('Event skipped!')
+            return {
+                'statusCode': 200,
+                'body': json.dumps('event was already processed , thats why its skipped!')
+            }
     except Exception as e:
         logger.error(f'Error processing event: {e}')
         return {
