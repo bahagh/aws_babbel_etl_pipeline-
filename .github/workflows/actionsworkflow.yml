@@ -23,6 +23,12 @@ jobs:
           zip Bubble_Transformer_Function.zip Bubble_Transformer_Function.py
         working-directory: ${{ github.workspace }}
 
+        
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest
+        working-directory: ${{ github.workspace }}
 
       - name: Lambda function Quality Test
         run: pytest lambda_quality.py
@@ -45,6 +51,6 @@ jobs:
         working-directory: ${{ github.workspace }}  
 
       - name: Terraform Apply
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master'  # Only apply changes on pushes to master branch
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'  # apply changes on pushes to master branch
         run: terraform apply -auto-approve tfplan
         working-directory: ${{ github.workspace }}  
