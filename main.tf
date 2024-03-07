@@ -10,8 +10,8 @@ terraform {
 # Configuring the AWS Provider
 provider "aws" {
   region = "eu-west-1"
-  access_key = "access"
-  secret_key = "secret"
+  access_key = "AKIAWDUCMLDJF3ZF7BEK"
+  secret_key = "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"
 }
 
 resource "aws_kinesis_stream" "kinesis_stream" {
