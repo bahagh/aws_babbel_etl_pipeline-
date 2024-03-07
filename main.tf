@@ -29,19 +29,25 @@ resource "aws_lambda_function" "lambda_function" {
 
   runtime = "python3.8"
 }
+////
+variable "create_lambda_mapping" {
+  default = false
+}
 
 resource "aws_lambda_event_source_mapping" "event_source_mapping" {
+  count             = var.create_lambda_mapping ? 1 : 0
   event_source_arn  = aws_kinesis_stream.kinesis_stream.arn
   function_name     = aws_lambda_function.lambda_function.arn
   starting_position = "TRIM_HORIZON"
   batch_size        = 278
 
   lifecycle {
-    ignore_changes = [
-      event_source_arn, 
-    ]
+    create_before_destroy = true
   }
 }
+
+
+////
 resource "aws_dynamodb_table" "ProcessedEvents" {
   name           = "ProcessedEvents"
   billing_mode   = "PAY_PER_REQUEST"
