@@ -26,6 +26,10 @@ jobs:
         uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: 1.7.4  
+          
+      - name: Initialize Terraform
+        run: terraform init
+        working-directory: ${{ github.workspace }} 
 
       - name: Terraform Plan
         run: terraform plan -out=tfplan
