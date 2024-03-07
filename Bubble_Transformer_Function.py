@@ -3,7 +3,8 @@ import json
 import base64
 from datetime import datetime
 import logging
-# line to see whether the zip step is working as it should be (attempt4)
+# considering these some serioous modifications and testing whether they will be deployed or not
+
 # Initializing logging
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
