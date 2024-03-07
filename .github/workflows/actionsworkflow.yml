@@ -1,0 +1,37 @@
+name: babbel-ETL-automatized
+
+on:
+  push:
+    branches:
+      - master 
+
+jobs:
+  build:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Zip Python file
+        run: zip Bubble_Transformer_Function.zip Bubble_Transformer_Function.py
+        working-directory: ${{ github.workspace }}
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.7.4  
+
+      - name: Initialize Terraform
+        run: terraform init
+        working-directory: ${{ github.workspace }}  
+
+      - name: Terraform Plan
+        run: terraform plan -out=tfplan
+        working-directory: ${{ github.workspace }}  
+
+      - name: Terraform Apply
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'  # Only apply changes on pushes to master branch
+        run: terraform apply -auto-approve tfplan
+        working-directory: ${{ github.workspace }}  
