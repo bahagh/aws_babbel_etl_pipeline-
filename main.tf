@@ -27,12 +27,12 @@ resource "aws_kinesis_stream" "kinesis_stream" {
 
 #terraform resource for my lambda fuction 
 resource "aws_lambda_function" "lambda_function" {
-  filename      = "./Bubble_Transformer_Function.zip"
+  filename      = "./lambda/Bubble_Transformer_Function.zip"
   function_name = "Bubble_Transformer_Function"
   role          = aws_iam_role.Baha_Lambda_Babbel_Role.arn
   handler       = "Bubble_Transformer_Function.lambda_handler"
 
-  source_code_hash = filebase64sha256("./Bubble_Transformer_Function.zip")
+  source_code_hash = filebase64sha256("./lambda/Bubble_Transformer_Function.zip")
 
   runtime = "python3.8"
 }
