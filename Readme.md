@@ -61,7 +61,7 @@ Get into somewhere where you would like to save my projects and open a cmd or po
 
 Clone the repository : 
 ```bash
- git clone https://github.com/bahagh/AWS_Babbel_ETL_Pipeline.git
+ git clone https://github.com/bahagh/aws_babbel_etl_pipeline-.git
 ```
 
 Get into the repository :

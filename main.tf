@@ -101,8 +101,6 @@ resource "aws_s3_bucket_public_access_block" "access_block" {
   restrict_public_buckets = true
 }
 
-
-
 # terraform resource to create the iam role i'll be using to make the connections i need between the different services possible
 resource "aws_iam_role" "Baha_Lambda_Babbel_Role" {
   name = "Baha_Lambda_Babbel_Role"
