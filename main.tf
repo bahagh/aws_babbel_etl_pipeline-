@@ -228,4 +228,3 @@ resource "aws_iam_role_policy_attachment" "lambda_kinesis_execution_role" {
   role       = aws_iam_role.Baha_Lambda_Babbel_Role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaKinesisExecutionRole"
 }
-
