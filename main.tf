@@ -16,7 +16,7 @@ provider "aws" {
 
 
 
-#terraform resource for my kinesis data stream
+#terraform resource for my kinesis data stream (1 shard is more than sufficient in our case where we expecting to handle a stream of 1000000 event /hour )
 resource "aws_kinesis_stream" "kinesis_stream" {
   name        = "Baha_Kinesis_Babbel_Stream"
   shard_count = 1
