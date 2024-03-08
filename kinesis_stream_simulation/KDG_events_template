@@ -1,0 +1,11 @@
+{
+    "event_uuid": "{{random.uuid}}",
+    "event_name": "{{random.arrayElement(['lesson:timeout','cancel','account:cancel','started','created:timeout','updated:success','user:completed','lesson:deleted','product:processed:timeout','lesson:updated:failure','account:created:timeout','lesson:processed:success','payment:updated:timeout','created','processed','started:success','payment:created','product:failure','deleted:success','processed:failure','account:pending','user:failure','user:error','order:deleted:success','account:failure','account:updated:pending','pending','user:completed:pending','order:started:error','payment:deleted','product:pending','completed:success','created:pending','order:created:error','product:completed:cancel','lesson:completed','order:timeout','account','payment:started:failure','product:deleted','account:processed','payment:deleted:pending','payment:cancel','account:updated:success','failure','lesson:pending','product:processed:cancel','user:pending','deleted','user:processed:failure','lesson:success','user:started:error','order:created','updated:timeout','product','product:completed','product:processed','lesson:completed:timeout','started:failure','order:completed','deleted:error','product:success','processed:pending','lesson:created','order:deleted','account:deleted:pending','product:cancel','created:success','account:completed:failure','updated','account:completed:timeout','started:error','user:created:pending','user','payment','payment:error','order:updated','lesson:started:failure','lesson','processed:cancel','account:deleted:success','lesson:started','order:error','order:deleted:pending','updated:pending','lesson:processed','user:timeout','user:created','error','lesson:updated','timeout','updated:error','completed','completed:pending','order:pending','started:cancel','success','deleted:cancel','order'])}}",
+    "created_at": {{date.now('x')}} ,
+    "user_id": "{{random.uuid}}",
+    "email": "{{internet.email}}",
+    "type_priority": "{{random.arrayElement(["Ignorable","Low","Normal","High","X Level priority","XX level priority"])}}"
+      
+    
+  }
+  
