@@ -55,21 +55,29 @@ Get into somewhere where you would like to save my projects :
  mkdir Solution_Of_Baha
 ```
 
+Clone the repository : 
+```bash
+ git clone https://github.com/bahagh/AWS_Babbel_ETL_Pipeline.git
+```
+
 Get into the repository :
 ```bash
- cd Solution_Of_Baha
+ cd AWS_Babbel_ETL_Pipeline
 ```
 ### N.B Please open terraform file "main.tf" in an editor and replace the 'access_key' and the 'secret_key' with your owns before moving to the next step
 initialize terraform in the repository :
 ```bash
  terraform init 
 ```
+
 plan changes :
 ```bash
  terraform plan 
 ```
+
 apply changes : 
 ```bash
  terraform plan 
 ```
+
 #### And that's it the Event Processing Pipeline is set , please visit your aws console and thank you so much for investing the time to review my solution :) !
