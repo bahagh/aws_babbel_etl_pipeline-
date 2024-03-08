@@ -1,3 +1,4 @@
+# please enter your keys in the aws provider configurations and enter you account id for the resource flagged with "!!!!!!.." while scrolling below 
 terraform {
   required_providers {
     aws = {
@@ -6,12 +7,13 @@ terraform {
     }
   }
 }
-
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # Configuring the AWS Provider
+# please enter your access key and secrey key below
 provider "aws" {
   region = "eu-west-1"
-  access_key = "AKIAWDUCMLDJF3ZF7BEK"
-  secret_key = "tRaGYrbaJVn5of9faSXL5naVWWRz7O5bCUna+AtC"
+  access_key = "access_key_here"
+  secret_key = "secret_key_here"
 }
 
 
@@ -124,8 +126,8 @@ EOF
 
 
 
-
-
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# enter your account id in the arn below please 
 # Customized policy containing the right i need from the dynamo table (its possible just use the predefined full access to dynamodb policy but it"s better to follow the principle of the least number of privilege and to use the specific requirements i'd need)
 resource "aws_iam_policy" "dynamodb_access" {
   name        = "DynamoDBAccessPolicy"
@@ -144,8 +146,8 @@ resource "aws_iam_policy" "dynamodb_access" {
         "dynamodb:UpdateItem",
         "dynamodb:DeleteItem",
         "dynamodb:DescribeTable"
-      ],
-      "Resource": "arn:aws:dynamodb:eu-west-1:420106492114:table/ProcessedEvents"
+      ],  
+      "Resource": "arn:aws:dynamodb:eu-west-1:replace_by_account_id:table/ProcessedEvents"
     }
   ]
 }
