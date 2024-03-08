@@ -50,9 +50,13 @@ Is a Continuous Integration/Continuous Delivery (CI/CD) platform that makes it p
 
 Assuming that you have already installed terraform in your machine and that it's path is already in the environment variables.
 
-Get into somewhere where you would like to save my projects :
+Get into somewhere where you would like to save my projects and open a cmd or powershell window and :
 ```bash
  mkdir Solution_Of_Baha
+```
+
+```bash
+ cd Solution_Of_Baha
 ```
 
 Clone the repository : 
@@ -64,7 +68,7 @@ Get into the repository :
 ```bash
  cd AWS_Babbel_ETL_Pipeline
 ```
-### N.B Please open terraform file "main.tf" in an editor and replace the 'access_key' and the 'secret_key' with your owns before moving to the next step
+### N.B Please open terraform file "main.tf" in an editor and replace the 'access_key' and the 'secret_key' with your owns and save it before moving to the next step
 initialize terraform in the repository :
 ```bash
  terraform init 
@@ -77,7 +81,7 @@ plan changes :
 
 apply changes : 
 ```bash
- terraform plan 
+ terraform apply
 ```
 
 #### And that's it the Event Processing Pipeline is set , please visit your aws console and thank you so much for investing the time to review my solution :) !
