@@ -38,7 +38,8 @@ jobs:
           pip install pytest
         working-directory: ${{ github.workspace }}
 
-      # Add additional steps as needed
+#      - name: Lambda function Quality Test
+
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
