@@ -39,6 +39,7 @@ jobs:
         working-directory: ${{ github.workspace }}
 
 #      - name: Lambda function Quality Test
+#        run: pytest lambda_quality.py
 
 
       - name: Setup Terraform
