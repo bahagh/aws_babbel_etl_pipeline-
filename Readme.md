@@ -2,7 +2,8 @@
 
 
 
-![hhh drawio](https://github.com/bahagh/AWS_Babbel_ETL_Pipeline/assets/73429122/28511bc2-6efb-4ef6-829e-8d8430194e55)
+
+![ddd drawio](https://github.com/bahagh/aws_babbel_etl_pipeline-/assets/73429122/2682c7a2-74ef-4f13-af93-9c1272586870)
 
 
 
@@ -19,6 +20,9 @@ Is a scalable and durable object storage service for storing and retrieving data
 
 ### Amazon Kinesis Data Streams : 
 Is a real-time data streaming service designed for building applications that process and analyze streaming data, offering scalability and seamless integration with other AWS services. I used it to ingest real time event data
+
+### AWS CloudWatch : 
+Is a service that provides monitoring and observability of your AWS resources and applications in real time. Used it as a monitoring tool for the different aws services i've used
 
 ### Amazon DynamoDB : 
 Is a fully managed NoSQL database service providing seamless scalability, high availability, and low-latency performance for flexible data models. I got use of it in handling duplicate events like a cache in such way u stored the uuid’s of processed events in it to be able to distinguish them from the events which were not processed yet and to skip them in case they have already been processed
@@ -48,9 +52,9 @@ Is a Continuous Integration/Continuous Delivery (CI/CD) platform that makes it p
 
 ## Run Solution:
 
-Assuming that you have already installed terraform in your machine and that it's path is already in the environment variables.
+Assuming that you have already installed terraform in your machine and that it's path is already in the environment variables and your machine have aws cli installed as well.
 
-Get into somewhere where you would like to save my projects and open a cmd or powershell window and :
+Get into somewhere where you would like to save my projects and open a cmd or powershell and please follow these commands:
 
 ```bash
  mkdir Solution_Of_Baha
@@ -69,7 +73,12 @@ Get into the repository :
 ```bash
  cd AWS_Babbel_ETL_Pipeline
 ```
-### N.B Please open terraform file "main.tf" in an editor and replace the 'access_key' and the 'secret_key' and 'account_id' value with your owns and save it before moving to the next step (the two resources will be marked with "!!!!!!!...")
+Use this command to configure your access and secret aws account key , if other inputs were asked please press enter for default: 
+
+```bash
+aws configure 
+```
+### N.B : Please open terraform file "main.tf" in an editor and replace the 'account_id' with your own and save it before moving to the next step (check first line of the main.tf file ")
 initialize terraform in the repository :
 ```bash
  terraform init 

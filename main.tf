@@ -1,4 +1,4 @@
-# please enter your keys in the aws provider configurations and enter you account id for the resource flagged with "!!!!!!.." while scrolling below 
+# please replace you account id for the resource of the dynamodb customized policy flagged with "!!!!!!.." while scrolling below (the value that presents my account id and that needs to be replaced is "420106492114" )
 terraform {
   required_providers {
     aws = {
@@ -7,13 +7,11 @@ terraform {
     }
   }
 }
-# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 # Configuring the AWS Provider
-# please enter your access key and secrey key below
 provider "aws" {
   region = "eu-west-1"
-  access_key = "access_key_here"
-  secret_key = "secret_key_here"
+
 }
 
 
@@ -147,7 +145,7 @@ resource "aws_iam_policy" "dynamodb_access" {
         "dynamodb:DeleteItem",
         "dynamodb:DescribeTable"
       ],  
-      "Resource": "arn:aws:dynamodb:eu-west-1:replace_by_account_id:table/ProcessedEvents"
+      "Resource": "arn:aws:dynamodb:eu-west-1:420106492114:table/ProcessedEvents"
     }
   ]
 }
@@ -227,4 +225,87 @@ resource "aws_iam_role_policy_attachment" "lambda_basic_execution_role" {
 resource "aws_iam_role_policy_attachment" "lambda_kinesis_execution_role" {
   role       = aws_iam_role.Baha_Lambda_Babbel_Role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaKinesisExecutionRole"
+}
+
+
+# terraform resource for a cloud watch dashboard to monitor the performance of the different services
+resource "aws_cloudwatch_dashboard" "babbel_dashboard" {
+  dashboard_name = "Baha_Babbel_Dashboard"
+
+  dashboard_body = jsonencode({
+    widgets = [
+      {
+        type = "metric"
+        x = 0
+        y = 0
+        width = 12
+        height = 6
+        properties = {
+          metrics = [
+            [ "AWS/Kinesis", "IncomingBytes", "StreamName", "Baha_Kinesis_Babbel_Stream" ],
+            [ "AWS/Kinesis", "GetRecords.IteratorAgeMilliseconds", "StreamName", "Baha_Kinesis_Babbel_Stream" ],
+            [ "AWS/Kinesis", "ReadProvisionedThroughputExceeded", "StreamName", "Baha_Kinesis_Babbel_Stream" ]
+          ]
+          period = 300
+          stat = "Average"
+          region = "eu-west-1"
+          title = "Kinesis Data Stream Metrics"
+        }
+      },
+      {
+        type = "metric"
+        x = 0
+        y = 6
+        width = 12
+        height = 6
+        properties = {
+          metrics = [
+            [ "AWS/Lambda", "Invocations", "FunctionName", "Bubble_Transformer_Function" ],
+            [ "AWS/Lambda", "Duration", "FunctionName", "Bubble_Transformer_Function" ],
+            [ "AWS/Lambda", "Errors", "FunctionName", "Bubble_Transformer_Function" ]
+          ]
+          period = 300
+          stat = "Average"
+          region = "eu-west-1"
+          title = "Lambda Function Metrics"
+        }
+      },
+      {
+        type = "metric"
+        x = 0
+        y = 12
+        width = 12
+        height = 6
+        properties = {
+          metrics = [
+            [ "AWS/S3", "NumberOfObjects", "BucketName", "baha-s3-babbel-bucket" ],
+            [ "AWS/S3", "BytesUploaded", "BucketName", "baha-s3-babbel-bucket" ],
+            [ "AWS/S3", "4xxErrors", "BucketName", "baha-s3-babbel-bucket" ]
+          ]
+          period = 86400
+          stat = "Average"
+          region = "eu-west-1"
+          title = "S3 Bucket Metrics"
+        }
+      },
+      {
+        type = "metric"
+        x = 0
+        y = 18
+        width = 12
+        height = 6
+        properties = {
+          metrics = [
+            [ "AWS/DynamoDB", "ConsumedReadCapacityUnits", "TableName", "ProcessedEvents" ],
+            [ "AWS/DynamoDB", "ProvisionedReadCapacityUnits", "TableName", "ProcessedEvents" ],
+            [ "AWS/DynamoDB", "ThrottledRequests", "TableName", "ProcessedEvents" ]
+          ]
+          period = 300
+          stat = "Average"
+          region = "eu-west-1"
+          title = "DynamoDB Table Metrics"
+        }
+      }
+    ]
+  })
 }
