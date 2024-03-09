@@ -13,7 +13,16 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        
+
+      - name: Configure AWS credentials
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          
+        run: |
+          aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+          aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+          
 
       - name: Zip Python file
         run: |
@@ -23,19 +32,13 @@ jobs:
           zip Bubble_Transformer_Function.zip Bubble_Transformer_Function.py
         working-directory: ${{ github.workspace }}/lambda
 
-
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install pytest
         working-directory: ${{ github.workspace }}
 
-
-
-#      - name: Lambda function Quality Test
-#        run: pytest lambda_quality.py
-        
-
+      # Add additional steps as needed
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
@@ -53,4 +56,4 @@ jobs:
       - name: Terraform Apply
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'  # apply changes on pushes to master branch
         run: terraform apply -auto-approve tfplan
-        working-directory: ${{ github.workspace }}  
+        working-directory: ${{ github.workspace }}

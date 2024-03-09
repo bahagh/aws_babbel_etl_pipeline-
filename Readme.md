@@ -83,6 +83,7 @@ Use this command to configure your access and secret aws account key , if other 
 aws configure 
 ```
 ### N.B : Please open terraform file "main.tf" in an editor and replace the 'account_id' with your own and save it before moving to the next step (check first line of the main.tf file ")
+
 initialize terraform in the repository :
 ```bash
  terraform init 
