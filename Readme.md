@@ -22,7 +22,11 @@ Is a scalable and durable object storage service for storing and retrieving data
 Is a real-time data streaming service designed for building applications that process and analyze streaming data, offering scalability and seamless integration with other AWS services. I used it to ingest real time event data
 
 ### AWS CloudWatch : 
+<<<<<<< HEAD
 Is a service that provides monitoring and observability of your AWS resources and applications in real time. Used it as a monitoring tool for the different aws services i've used
+=======
+Is a service that provides monitoring and observability of your AWS resources and applications in real time.
+>>>>>>> 49a9ab92b93e4f7dc3fc109209be9d3c68a4e865
 
 ### Amazon DynamoDB : 
 Is a fully managed NoSQL database service providing seamless scalability, high availability, and low-latency performance for flexible data models. I got use of it in handling duplicate events like a cache in such way u stored the uuid’s of processed events in it to be able to distinguish them from the events which were not processed yet and to skip them in case they have already been processed
