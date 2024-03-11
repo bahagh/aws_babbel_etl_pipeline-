@@ -71,7 +71,7 @@ Clone the repository :
 
 Get into the repository :
 ```bash
- cd AWS_Babbel_ETL_Pipeline
+ cd aws_babbel_etl_pipeline-
 ```
 Use this command to configure your access and secret aws account key , if other inputs were asked please press enter for default: 
 
