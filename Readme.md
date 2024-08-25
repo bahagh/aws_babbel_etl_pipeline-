@@ -95,4 +95,4 @@ apply changes :
  terraform apply
 ```
 
-#### And that's it the Event Processing Pipeline is set , please visit your aws console to check and test and thank you so much for investing the time to review my solution :) !
+#### And that's it the Event Processing Pipeline is set , please visit your aws console to check and test :) !
