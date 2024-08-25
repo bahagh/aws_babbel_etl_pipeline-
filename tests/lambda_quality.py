@@ -1,4 +1,4 @@
-# I did not have time to write the unit and integration tests but they should be here :) #
+# integration tests should be here :) #
 import pytest
 
 @pytest.fixture
