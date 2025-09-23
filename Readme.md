@@ -34,7 +34,7 @@ Is an open-source Infrastructure as Code (IaC) tool that allows you to define an
 Is a Continuous Integration/Continuous Delivery (CI/CD) platform that makes it possible to automate your software development workflows right in the Github repository. It enables you to build, test, and deploy your code, In my case I chose it as a tool to automate the different steps of my cicd pipeline , in addition to that it is much simpler to integrate and to attach to the project github repository than other alternatives like (Jenkins for example )
 
 
-# Design Questions:
+# Possible Design Questions / Improvements:
 
 
 - ## Handling duplicate events and quality metrics : 
@@ -54,7 +54,7 @@ Is a Continuous Integration/Continuous Delivery (CI/CD) platform that makes it p
 
 Assuming that you have already installed terraform in your machine and that it's path is already in the environment variables and your machine have aws cli installed as well.
 
-Get into somewhere where you would like to save my projects and open a cmd or powershell and please follow these commands:
+Get into somewhere where you would like to save my project and open a cmd or powershell and please follow these commands:
 
 ```bash
  mkdir Solution_Of_Baha
